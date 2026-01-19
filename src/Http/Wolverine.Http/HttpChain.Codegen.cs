@@ -41,6 +41,11 @@ public partial class HttpChain
         {
             if (_generatedType != null) return;
 
+            // Set middleware context so that service resolution can use middleware-created variables
+            MiddlewareContext.CurrentVariables = Middleware
+                .SelectMany(f => f.Creates)
+                .ToList();
+
             assembly.UsingNamespaces!.Fill(typeof(RoutingHttpContextExtensions).Namespace);
             assembly.UsingNamespaces.Fill("System.Linq");
             assembly.UsingNamespaces.Fill("System");
