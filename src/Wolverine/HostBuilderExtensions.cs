@@ -111,7 +111,7 @@ public static class HostBuilderExtensions
 
         services.AddSingleton<IServiceContainer, ServiceContainer>();
 
-        services.AddTransient<IServiceVariableSource, ServiceCollectionServerVariableSource>();
+        services.AddTransient<IServiceVariableSource, WolverineServiceVariableSource>();
 
         services.AddSingleton(s =>
         {

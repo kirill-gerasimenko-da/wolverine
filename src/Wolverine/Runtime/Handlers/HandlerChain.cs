@@ -196,6 +196,11 @@ public class HandlerChain : Chain<HandlerChain, ModifyHandlerChainAttribute>, IW
 
     void ICodeFile.AssembleTypes(GeneratedAssembly assembly)
     {
+        // Set middleware context so that service resolution can use middleware-created variables
+        MiddlewareContext.CurrentVariables = Middleware
+            .SelectMany(f => f.Creates)
+            .ToList();
+
         foreach (var handler in Handlers)
         {
             if (handler.Creates.Any(x => x.VariableType == typeof(Envelope)))
